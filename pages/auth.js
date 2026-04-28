@@ -2,30 +2,54 @@
 const SUPABASE_URL = 'https://cnxsnefyxtnzmujrmmfn.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNueHNuZWZ5eHRuem11anJtbWZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczODcyMzUsImV4cCI6MjA5Njk2MzIzNX0.Bz3uqaT9D4tQkCjE0nJjvWv2R-9wZ8FepJFlop89DZg';
 
-const { createClient } = window.supabase;
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+let supabase;
 
-// DOM Elements
-const authForm = document.getElementById('authForm');
-const emailInput = document.getElementById('email');
-const passwordInput = document.getElementById('password');
-const confirmPasswordInput = document.getElementById('confirmPassword');
-const toggleBtn = document.getElementById('toggleBtn');
-const authTitle = document.getElementById('authTitle');
-const authSubtitle = document.getElementById('authSubtitle');
-const toggleText = document.getElementById('toggleText');
-const submitBtn = document.getElementById('submitBtn');
-const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
-const generalError = document.getElementById('generalError');
-const emailError = document.getElementById('emailError');
-const passwordError = document.getElementById('passwordError');
-const confirmPasswordError = document.getElementById('confirmPasswordError');
-const successMessage = document.getElementById('successMessage');
+// Wait for Supabase JS to load
+if (window.supabase) {
+    const { createClient } = window.supabase;
+    supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+}
+
+// DOM Elements (will be initialized after DOM loads)
+let authForm, emailInput, passwordInput, confirmPasswordInput, toggleBtn;
+let authTitle, authSubtitle, toggleText, submitBtn, confirmPasswordGroup;
+let generalError, emailError, passwordError, confirmPasswordError, successMessage;
 
 let isSignUp = false;
 
+// Initialize everything when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Get DOM elements
+    authForm = document.getElementById('authForm');
+    emailInput = document.getElementById('email');
+    passwordInput = document.getElementById('password');
+    confirmPasswordInput = document.getElementById('confirmPassword');
+    toggleBtn = document.getElementById('toggleBtn');
+    authTitle = document.getElementById('authTitle');
+    authSubtitle = document.getElementById('authSubtitle');
+    toggleText = document.getElementById('toggleText');
+    submitBtn = document.getElementById('submitBtn');
+    confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
+    generalError = document.getElementById('generalError');
+    emailError = document.getElementById('emailError');
+    passwordError = document.getElementById('passwordError');
+    confirmPasswordError = document.getElementById('confirmPasswordError');
+    successMessage = document.getElementById('successMessage');
+
+    // Check if user is already logged in
+    checkAuthStatus();
+
+    // Add event listeners
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', toggleAuthMode);
+    }
+    if (authForm) {
+        authForm.addEventListener('submit', handleFormSubmit);
+    }
+});
+
 // Toggle between Login and Sign Up
-toggleBtn.addEventListener('click', () => {
+function toggleAuthMode() {
     isSignUp = !isSignUp;
     resetForm();
     
@@ -44,16 +68,16 @@ toggleBtn.addEventListener('click', () => {
         submitBtn.textContent = 'Se connecter';
         confirmPasswordGroup.style.display = 'none';
     }
-});
+}
 
 // Reset form errors
 function resetForm() {
-    authForm.reset();
-    generalError.classList.remove('show');
-    emailError.classList.remove('show');
-    passwordError.classList.remove('show');
-    confirmPasswordError.classList.remove('show');
-    successMessage.classList.remove('show');
+    if (authForm) authForm.reset();
+    if (generalError) generalError.classList.remove('show');
+    if (emailError) emailError.classList.remove('show');
+    if (passwordError) passwordError.classList.remove('show');
+    if (confirmPasswordError) confirmPasswordError.classList.remove('show');
+    if (successMessage) successMessage.classList.remove('show');
 }
 
 // Validate email
@@ -92,16 +116,24 @@ function validateForm() {
 }
 
 // Handle form submission
-authForm.addEventListener('submit', async (e) => {
+async function handleFormSubmit(e) {
     e.preventDefault();
     
+    if (!supabase) {
+        if (generalError) {
+            generalError.textContent = 'Erreur : Supabase non initialisé';
+            generalError.classList.add('show');
+        }
+        return;
+    }
+
     if (!validateForm()) {
         return;
     }
 
-    generalError.classList.remove('show');
-    successMessage.classList.remove('show');
-    submitBtn.disabled = true;
+    if (generalError) generalError.classList.remove('show');
+    if (successMessage) successMessage.classList.remove('show');
+    if (submitBtn) submitBtn.disabled = true;
 
     try {
         if (isSignUp) {
@@ -115,18 +147,20 @@ authForm.addEventListener('submit', async (e) => {
                 throw error;
             }
 
-            successMessage.textContent = 'Inscription réussie ! Vérifiez votre email pour confirmer votre compte.';
-            successMessage.classList.add('show');
+            if (successMessage) {
+                successMessage.textContent = 'Inscription réussie ! Vérifiez votre email pour confirmer votre compte.';
+                successMessage.classList.add('show');
+            }
             resetForm();
             
             setTimeout(() => {
                 isSignUp = false;
-                authTitle.textContent = 'Connexion';
-                authSubtitle.textContent = 'Accédez à vos logiciels';
-                toggleText.textContent = 'Pas encore de compte ?';
-                toggleBtn.textContent = 'S\'inscrire';
-                submitBtn.textContent = 'Se connecter';
-                confirmPasswordGroup.style.display = 'none';
+                if (authTitle) authTitle.textContent = 'Connexion';
+                if (authSubtitle) authSubtitle.textContent = 'Accédez à vos logiciels';
+                if (toggleText) toggleText.textContent = 'Pas encore de compte ?';
+                if (toggleBtn) toggleBtn.textContent = 'S\'inscrire';
+                if (submitBtn) submitBtn.textContent = 'Se connecter';
+                if (confirmPasswordGroup) confirmPasswordGroup.style.display = 'none';
             }, 3000);
 
         } else {
@@ -140,24 +174,31 @@ authForm.addEventListener('submit', async (e) => {
                 throw error;
             }
 
-            successMessage.textContent = 'Connexion réussie ! Redirection...';
-            successMessage.classList.add('show');
+            if (successMessage) {
+                successMessage.textContent = 'Connexion réussie ! Redirection...';
+                successMessage.classList.add('show');
+            }
 
             setTimeout(() => {
                 window.location.href = 'dashboard.html';
             }, 1500);
         }
     } catch (error) {
-        generalError.textContent = error.message || 'Une erreur est survenue. Veuillez réessayer.';
-        generalError.classList.add('show');
+        if (generalError) {
+            generalError.textContent = error.message || 'Une erreur est survenue. Veuillez réessayer.';
+            generalError.classList.add('show');
+        }
+        console.error('Auth error:', error);
     } finally {
-        submitBtn.disabled = false;
+        if (submitBtn) submitBtn.disabled = false;
     }
-});
+}
 
 // Check if user is already logged in
-window.addEventListener('load', async () => {
+async function checkAuthStatus() {
     try {
+        if (!supabase) return;
+        
         const { data } = await supabase.auth.getSession();
         if (data.session) {
             window.location.href = 'dashboard.html';
@@ -165,4 +206,4 @@ window.addEventListener('load', async () => {
     } catch (error) {
         console.error('Erreur lors de la vérification de la session:', error);
     }
-});
+}
