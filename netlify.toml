@@ -1,0 +1,25 @@
+# Netlify configuration file
+
+# Build settings
+[build]
+  command = "echo 'No build required - static site'"
+  publish = "."
+
+# Redirect rules (SPA support)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Custom headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Environment variables (set these in Netlify UI)
+# SUPABASE_URL = "https://your-project.supabase.co"
+# SUPABASE_KEY = "your-anon-key"

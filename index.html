@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spiral - Logiciels Open Source</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/Spiral Logo.png">
+</head>
+<body>
+    <div class="stars"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-section">
+                <img src="assets/Spiral Logo.png" alt="Spiral Logo" class="logo">
+                <span class="logo-text">SPIRAL</span>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#features" class="nav-link">Caractéristiques</a>
+                <a href="#software" class="nav-link">Logiciels</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="pages/login.html" class="btn-login">Se connecter</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="spiral-animation">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <path class="spiral-path" d="M 100 10 A 90 90 0 0 1 180 100 A 70 70 0 0 1 50 100 A 50 50 0 0 1 150 100" 
+                          fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h1>Bienvenue sur <span class="highlight">SPIRAL</span></h1>
+            <p class="subtitle">Des logiciels open source innovants à votre portée</p>
+            <p class="description">Accédez à nos logiciels web et desktop gratuits. Créez un compte et commencez dès maintenant.</p>
+            <a href="pages/login.html" class="btn-primary">Commencer maintenant</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2>Pourquoi choisir Spiral ?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Open Source</h3>
+                <p>Tous nos logiciels sont 100% open source et transparents</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Sécurisé</h3>
+                <p>Vos données sont protégées avec les meilleurs standards de sécurité</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Performant</h3>
+                <p>Optimisé pour la vitesse et l'efficacité</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Communauté</h3>
+                <p>Rejoignez une communauté active de développeurs</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Software Section -->
+    <section id="software" class="software">
+        <h2>Nos Logiciels</h2>
+        <p class="section-intro">Connectez-vous pour télécharger et utiliser nos applications</p>
+        
+        <div class="software-grid" id="softwareGrid">
+            <!-- Cards will be populated from dashboard -->
+            <div class="software-card">
+                <h3>Accès restreint</h3>
+                <p>Connectez-vous pour voir nos logiciels</p>
+                <a href="pages/login.html" class="btn-secondary">Se connecter</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2>Restons en contact</h2>
+        <div class="contact-content">
+            <form class="contact-form" id="contactForm">
+                <input type="email" placeholder="Votre email" required>
+                <textarea placeholder="Votre message" rows="5" required></textarea>
+                <button type="submit" class="btn-primary">Envoyer</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Spiral</h4>
+                <p>Des logiciels innovants pour tous</p>
+            </div>
+            <div class="footer-section">
+                <h4>Liens</h4>
+                <ul>
+                    <li><a href="#">À propos</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">GitHub</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Légal</h4>
+                <ul>
+                    <li><a href="privacy.html">Politique de confidentialité</a></li>
+                    <li><a href="terms.html">Conditions d'utilisation</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Spiral. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

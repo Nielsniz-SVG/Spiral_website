@@ -1,0 +1,30 @@
+{
+  "name": "spiral-website",
+  "version": "1.0.0",
+  "description": "Site web officiel de Spiral - Logiciels open source",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000 || npx http-server",
+    "deploy": "netlify deploy --prod",
+    "dev": "netlify dev"
+  },
+  "keywords": [
+    "spiral",
+    "open-source",
+    "software",
+    "web",
+    "desktop"
+  ],
+  "author": "Spiral Team",
+  "license": "MIT",
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/Spiral_website.git"
+  }
+}
